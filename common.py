@@ -25,7 +25,7 @@ def makeStar(mass, x, y, z):
 
 
 def generateStars(N: int):
-    return np.array([(generateStar()) for i in range(N)])
+    return np.array([(generateStar()) for i in range(N)], dtype=object)
 
 def dist(star1, star2):
     return np.sqrt(sum(map(lambda x: (x[0]+x[1])**2, zip(star1[1:], star2[1:]))))

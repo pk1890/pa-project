@@ -12,6 +12,11 @@ def calculate_accelerations(stars):
 
 # print(calculate_accelerations(np.array([np.array([1, 0, 0, 0]), np.array([1, 10, 2, 2])])))
 
-stars = generateStars(5)
+from timeit import default_timer as timer
+
+stars = generateStars(200)
+start=timer()
 calculate_accelerations(stars)
-print_stars(stars)
+end = timer()
+print(end-start)
+# print_stars(stars)
