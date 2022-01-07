@@ -1,8 +1,8 @@
 #!/bin/bash -l
 
 test_iterations=5
-thread_nums=(12 11 10 9 8 7 6 5 4 3 2 1)
-problem_sizes=(60 120 180 240 300)
+thread_nums=(4 3 2 1)
+problem_sizes=(60 120 180 240)
 problems_iterations=100
 
 report_file=report2.csv
