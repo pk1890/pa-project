@@ -1,23 +1,24 @@
 import numpy as np
-from common import generateStars, dist, calculate_single_acceleration, print_stars
+from common import generateStars, calculate_single_force
 from pprint import pprint
 
-def calculate_accelerations(stars):
-    acc = np.zeros((len(stars), 3))
+def calculate_forces(stars):
+    forces = np.zeros((len(stars), 3))
     for i in range(len(stars)):
         star = stars[i]
-        acc[i] = sum([calculate_single_acceleration(star, stars[j])
+        forces[i] = sum([calculate_single_force(star, stars[j])
                 for j in range(len(stars)) if not i == j])
 
-    return acc
+    return forces
 
-# print(calculate_accelerations(np.array([np.array([1, 0, 0, 0]), np.array([1, 10, 2, 2])])))
+
+# print(calculate_forces(np.array([np.array([1, 0, 0, 0]), np.array([1, 10, 2, 2])])))
 
 # from timeit import default_timer as timer
 
 # stars = generateStars(1000)
 # start=timer()
-# acc = calculate_accelerations(stars)
+# forces = calculate_forces(stars)
 # end = timer()
 # print(end-start)
-# # print_stars(stars, acc)
+# # print_stars(stars, forces)
