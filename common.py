@@ -1,5 +1,4 @@
 import numpy as np
-from pprint import pprint
 import random
 
 G = 6.6743015E-11
@@ -8,7 +7,7 @@ def calculate_single_force(star1, star2):
     return G/(dist(star1, star2)**3)*(star1[1:] - star2[1:])
 
 def calculate_accelerations(stars, forces):
-    accelerations = np.zeros((len(forces), 3))
+    accelerations = np.zeros((len(stars), 3))
     for i in range(len(stars)):
         accelerations[i] = forces[i] * stars[i][0]
     return accelerations
