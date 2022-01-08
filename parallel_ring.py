@@ -8,7 +8,7 @@ import socket
 import sys
 import numpy as np
 import math
-from common import calculate_single_force, generateStars, makeStar, calculate_accelerations
+from common import *
 from pprint import pprint
 
 comm = MPI.COMM_WORLD
@@ -47,7 +47,8 @@ def calculate_parallel(*, local_size = 3, global_stars = None):
 
             
     comm.Barrier()
-    comm.Isend([forces, MPI.FLOAT], dest=0)
+    accelerations = calculate_accelerations(local_stars, forces)
+    comm.Isend([accelerations, MPI.FLOAT], dest=0)
 
     comm.Barrier()
     if thread_id == 0:
@@ -60,7 +61,6 @@ def calculate_parallel(*, local_size = 3, global_stars = None):
                 result = buffer.copy()
             else:
                 result = np.concatenate((result, buffer))
-
         return result
 
 
@@ -85,7 +85,7 @@ if len(sys.argv) == 1:
         print('---------------------\nSEQUENTIAL:', flush = True)
         pprint(calculate_accelerations(global_stars, calculate_forces(global_stars)))
         print('---------------------\nPARALLEL:', flush = True)
-        pprint(calculate_accelerations(global_stars, parallel_forces))
+        pprint(parallel_forces)
 
 
 else:
@@ -93,10 +93,18 @@ else:
 
     from timeit import default_timer as timer
 
-    global_stars = generateStars(N)
+    global_stars = generateStarsParallel(N)
     if thread_id == 0:
         start = timer()
-    calculate_parallel(global_stars=global_stars)
+    par1 = calculate_parallel(global_stars=global_stars)
+
     if thread_id == 0:
         end = timer()
         print(end-start)
+        # from sequential import calculate_forces
+        # seq = calculate_accelerations(global_stars, calculate_forces(global_stars))
+
+        # print(par1)
+        # print(seq)
+        # print(par1-seq)
+
